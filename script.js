@@ -68,7 +68,7 @@ $(document).ready(function() {
     // ARKA KAPAK
     $('#magazine').append(`
         <div class="page cover-back">
-            <h1 class="main-title" style="font-size:2rem">Seni Seviyorum</h1>
+            <h1 class="main-title" style="font-size:2rem">Seni Çok Seviyorum Ayşebalım</h1>
             <div class="divider"><span class="heart-icon">♥</span></div>
             <p class="names" style="margin-top:20px">14.02.2025</p>
         </div>
