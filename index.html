@@ -67,23 +67,49 @@
             const DOGRU_SIFRE = "1402"; 
             
             function attemptLogin() {
-                if ($("#pass-input").val() === DOGRU_SIFRE) {
-                    $("#login-screen").fadeOut(500, function() {
-                        // Flex yaparak açıyoruz ki ortalansın
-                        $("#book-wrapper").css("display", "flex").hide().fadeIn(1000);
+                var girilenSifre = $("#pass-input").val();
+
+                if (girilenSifre === DOGRU_SIFRE) {
+                    
+                    // --- KRİTİK DÜZELTME: MÜZİĞİ HEMEN BAŞLAT ---
+                    // Animasyonun bitmesini beklemiyoruz!
+                    var audio = document.getElementById("bg-music");
+                    if(audio) { 
+                        audio.volume = 0.5; 
+                        // Play komutunu hemen veriyoruz
+                        var playPromise = audio.play();
                         
-                        // Müzik Başlat
-                        var audio = document.getElementById("bg-music");
-                        if(audio) { audio.volume = 0.5; audio.play().catch(e => console.log(e)); }
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                console.log("Otomatik oynatma engellendi, sayfaya dokununca açılacak.");
+                            });
+                        }
+                    }
+
+                    // --- SONRA EKRANI KAYBET ---
+                    $("#login-screen").fadeOut(800, function() {
+                        $("#book-wrapper").css("display", "flex").hide().fadeIn(1000);
                     });
+
                 } else {
+                    // Şifre Yanlışsa
                     $(".error-msg").fadeIn().delay(1000).fadeOut();
                     $("#pass-input").val("");
+                    
+                    // Kutuyu salla
+                    $("#login-box").animate({marginLeft: "-10px"}, 50)
+                                   .animate({marginLeft: "10px"}, 50)
+                                   .animate({marginLeft: "0px"}, 50);
                 }
             }
 
+            // Butona tıklayınca
             $("#login-btn").click(attemptLogin);
-            $('#pass-input').keypress(function (e) { if (e.which == 13) attemptLogin(); });
+            
+            // Enter'a basınca
+            $('#pass-input').keypress(function (e) { 
+                if (e.which == 13) attemptLogin(); 
+            });
         });
     </script>
 </body>
