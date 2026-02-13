@@ -3,51 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bizim Hikayemiz</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
 
     <style>
-        #book-wrapper { display: none; } /* Başlangıçta gizli */
-        
+        /* Login Ekranı CSS (Dosya kalabalığı olmasın diye burada) */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #1a1a1a; z-index: 99999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; font-family: 'Montserrat', sans-serif;
         }
-        #login-box {
-            text-align: center; padding: 40px; 
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.05); 
-            border-radius: 15px; box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            max-width: 90%;
-        }
-        #pass-input {
-            padding: 12px; font-size: 1.5rem; border-radius: 8px; border: 1px solid #555;
-            outline: none; text-align: center; margin-top: 20px; letter-spacing: 5px;
-            background-color: #333; color: #fff; width: 140px;
-        }
-        #login-btn {
-            display: block; margin: 20px auto 0 auto;
-            padding: 10px 30px; background: #d4a5a5; color: white;
-            border: none; border-radius: 30px; cursor: pointer; font-size: 1rem; font-weight: 600;
-            transition: 0.3s;
-        }
-        #login-btn:hover { background: #c0392b; }
-        .error-msg { color: #e74c3c; margin-top: 15px; display: none; }
+        #login-box { text-align: center; padding: 30px; background: rgba(255,255,255,0.05); border-radius: 15px; width: 80%; max-width: 300px; }
+        #pass-input { padding: 10px; font-size: 1.2rem; border-radius: 5px; border: 1px solid #555; text-align: center; margin-top: 20px; background: #333; color: #fff; width: 120px; letter-spacing: 5px; }
+        #login-btn { display: block; margin: 20px auto 0 auto; padding: 10px 30px; background: #d4a5a5; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; }
+        .error-msg { color: #e74c3c; margin-top: 15px; display: none; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
         <div id="login-box">
-            <h2 style="font-family: 'Playfair Display', serif; margin-bottom: 10px; color:#d4a5a5;">Hoş Geldin</h2>
-            <p style="color:#ccc; font-size:0.9rem;">Bu hikaye şifrelidir.</p>
+            <h2 style="font-family: 'Playfair Display', serif; color:#d4a5a5;">Hoş Geldin</h2>
+            <p style="font-size: 0.9rem; color: #ccc;">Bizim hikayemiz...</p>
             <input type="password" id="pass-input" placeholder="****" maxlength="4">
             <button id="login-btn">GİRİŞ</button>
-            <p class="error-msg">Hatalı şifre!</p>
+            <p class="error-msg">Şifre Hatalı!</p>
         </div>
     </div>
 
@@ -59,7 +45,7 @@
                 <p class="names">Ayşenaz & Enes</p>
                 <div class="divider"><span class="heart-icon">♥</span></div>
                 <div id="together-counter">Hesaplanıyor...</div>
-                <div class="instruction">Başlamak için köşeden çevir...</div>
+                <div class="instruction">Sayfaları çevirmek için dokun...</div>
             </div>
             </div>
     </div>
@@ -75,34 +61,29 @@
 
     <script src="data.js"></script>
     <script src="script.js"></script>
-
+    
     <script>
         $(document).ready(function() {
             const DOGRU_SIFRE = "1402"; 
-
-            $("#login-btn").click(function() { checkPassword(); });
-            $('#pass-input').keypress(function (e) { if (e.which == 13) checkPassword(); });
-
-            function checkPassword() {
-                var girilen = $("#pass-input").val();
-                if (girilen === DOGRU_SIFRE) {
-                    
-                    // Şifre Doğruysa Login Ekranını Kaldır
+            
+            function attemptLogin() {
+                if ($("#pass-input").val() === DOGRU_SIFRE) {
                     $("#login-screen").fadeOut(500, function() {
-                        
-                        // ÖNEMLİ: Kitabı 'flex' olarak aç ki ortalansın!
+                        // Flex yaparak açıyoruz ki ortalansın
                         $("#book-wrapper").css("display", "flex").hide().fadeIn(1000);
                         
-                        // Müziği Başlat
+                        // Müzik Başlat
                         var audio = document.getElementById("bg-music");
                         if(audio) { audio.volume = 0.5; audio.play().catch(e => console.log(e)); }
                     });
-
                 } else {
-                    $(".error-msg").fadeIn().delay(1500).fadeOut();
+                    $(".error-msg").fadeIn().delay(1000).fadeOut();
                     $("#pass-input").val("");
                 }
             }
+
+            $("#login-btn").click(attemptLogin);
+            $('#pass-input').keypress(function (e) { if (e.which == 13) attemptLogin(); });
         });
     </script>
 </body>
