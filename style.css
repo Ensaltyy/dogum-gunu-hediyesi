@@ -1,144 +1,69 @@
-/* style.css - 13 ŞUBAT FİNAL (MOBİL UYUMLU & ORTALI) */
-
-/* Sayfa yapısını sıfırla ve tam ekran yap */
+/* style.css - FİNAL MOBİL UYUMLU */
 html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Kaydırma çubuklarını yok et */
+    width: 100%; height: 100%; margin: 0; padding: 0;
+    overflow: hidden; /* Kaydırmayı engelle */
     background-color: #e8e4e1;
     background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
     font-family: 'Montserrat', sans-serif;
+    touch-action: manipulation; /* Mobilde dokunmayı iyileştirir */
 }
 
-/* Kitabı kapsayan kutu: HER ZAMAN ORTALA */
+/* KİTAP KAPLAYICISI - MERKEZLEME */
 #book-wrapper {
-    width: 100vw;
-    height: 100vh;
-    display: flex;             /* Esnek kutu */
-    justify-content: center;   /* Yatayda ortala */
-    align-items: center;       /* Dikeyde ortala */
-    position: absolute;
-    top: 0;
-    left: 0;
+    width: 100vw; height: 100vh;
+    display: none; /* JS ile açılacak */
+    justify-content: center; align-items: center;
+    position: absolute; top: 0; left: 0;
 }
 
-#magazine {
-    width: 900px;
-    height: 550px;
-    transition: transform 0.5s ease; /* Dönüşler yumuşak olsun */
-}
+#magazine { width: 900px; height: 550px; transition: transform 0.3s ease; }
 
-/* Sayfa Temel Ayarı */
 .page {
-    width: 450px;
-    height: 550px;
-    box-sizing: border-box;
-    overflow: hidden;
-    position: relative;
-    border-right: 1px solid rgba(0,0,0,0.05);
-    background-color: #fffcf8;
+    width: 450px; height: 550px; background-color: #fffcf8;
+    border-right: 1px solid rgba(0,0,0,0.05); overflow: hidden; position: relative;
 }
 
-/* --- KAPAKLAR --- */
+/* KAPAKLAR */
 .cover-front, .cover-back {
-    background-color: #fdfbf9;
     background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    border: 8px solid #fff;
-    outline: 1px solid #e0d6c6;
+    text-align: center; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; padding: 20px;
+    border: 8px solid #fff; outline: 1px solid #e0d6c6;
 }
+.cover-panda { width: 150px; margin-bottom: 20px; }
+.main-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #4a4a4a; margin-bottom: 5px; }
+.names { font-size: 1rem; color: #777; text-transform: uppercase; letter-spacing: 2px; }
+.instruction { margin-top: 30px; font-size: 0.7rem; color: #aaa; font-style: italic; }
 
-/* Kapak Görselleri */
-.cover-panda { width: 160px; height: auto; margin-bottom: 20px; filter: sepia(0.1) contrast(0.9); }
-.main-title { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #4a4a4a; margin: 0 0 10px 0; font-weight: 700; letter-spacing: -1px; }
-.names { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; color: #7a7a7a; margin: 0 0 20px 0; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; }
-
-/* Ayraç ve Sayaç */
-.divider { margin: 15px 0; display: flex; align-items: center; justify-content: center; width: 100%; }
-.divider::before, .divider::after { content: ''; height: 1px; background: #e0d6c6; width: 60px; margin: 0 15px; }
-.heart-icon { color: #d4a5a5; font-size: 1.2rem; }
-#together-counter { margin-top: 15px; font-size: 0.9rem; color: #8e8e8e; font-weight: 600; letter-spacing: 1px; }
-.instruction { margin-top: 40px; font-size: 0.75rem; color: #aaa; font-style: italic; }
-
-/* Bitiş Mesajları */
-.final-message { font-family: 'Playfair Display', serif; font-size: 2rem; color: #4a4a4a; margin-bottom: 20px; font-style: italic; }
-.final-note { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #777; line-height: 1.6; max-width: 85%; margin-top: 20px; border-top: 1px solid #e0d6c6; padding-top: 20px; }
-
-/* --- İÇ SAYFALAR --- */
-.collage-page {
-    background-color: #f0ece6;
-    background-image: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url("https://www.transparenttextures.com/patterns/subtle-white-feathers.png");
-    padding: 0;
-}
-
+/* İÇ SAYFALAR */
+.collage-page { background-color: #f0ece6; }
 .scattered-img {
-    position: absolute;
-    background: #fff;
-    padding: 4px 4px 14px 4px;
-    box-shadow: 2px 4px 12px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    cursor: zoom-in;
-    border-radius: 2px;
-    height: auto; 
-    max-height: 60%;
-    object-fit: contain;
+    position: absolute; background: #fff; padding: 4px;
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.2s ease; cursor: zoom-in;
+    object-fit: cover; border-radius: 2px;
 }
-.scattered-img:hover { z-index: 1000 !important; transform: scale(1.15) rotate(0deg) !important; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
 
 .text-page {
-    padding: 40px;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    background-color: #fffcf8; background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    padding: 30px; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
 }
-.page-title { font-family: 'Playfair Display', serif; color: #d4a5a5; font-size: 1.6rem; text-align: center; margin-bottom: 10px; font-weight: 700; }
-.page-date { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #999; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
-.page-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; line-height: 1.6; color: #555; text-align: center; font-style: italic; max-width: 90%; }
+.page-title { font-family: 'Playfair Display', serif; color: #d4a5a5; font-size: 1.5rem; margin-bottom: 15px; font-weight: 700; text-align: center;}
+.page-date { font-size: 0.8rem; color: #999; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+.page-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; line-height: 1.6; color: #555; text-align: center; font-style: italic; }
 
-/* --- MODAL (LIGHTBOX) --- */
-#image-modal { display: none; position: fixed; z-index: 99999; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); }
-.modal-content { margin: auto; display: block; width: auto; max-width: 95%; max-height: 80vh; border: 4px solid #fff; box-shadow: 0 0 20px rgba(0,0,0,0.5); animation: zoom 0.3s; }
-@keyframes zoom { from {transform:scale(0)} to {transform:scale(1)} }
-.close-modal { position: absolute; top: 15px; right: 25px; color: #f1c40f; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+/* MODAL */
+#image-modal { display: none; position: fixed; z-index: 999999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); }
+.modal-content { display: block; margin: auto; max-width: 95%; max-height: 80vh; border: 4px solid #fff; position: relative; top: 50%; transform: translateY(-50%); }
+.close-modal { position: absolute; top: 20px; right: 30px; color: #f1c40f; font-size: 40px; cursor: pointer; }
 
-/* =========================================
-   MOBİL VE TABLET UYUMLULUĞU (RESPONSIVE)
-   ========================================= */
-
-/* Tabletler ve Küçük Laptoplar */
-@media (max-width: 1000px) {
-    #magazine {
-        transform: scale(0.8); /* %80 Küçült */
-    }
-}
-
-/* Telefonlar (Dikey Mod) */
+/* --- MOBİL UYUMLULUK (EN ÖNEMLİ KISIM) --- */
 @media (max-width: 600px) {
     #magazine {
-        /* Telefon ekranına sığması için %45'e kadar küçültüyoruz */
-        transform: scale(0.45); 
+        /* Telefonlar için %42 oranında küçültme - Tam oturur */
+        transform: scale(0.42) !important;
+        transform-origin: center center;
     }
-    
-    /* Login ekranını mobilde düzelt */
-    #login-box {
-        width: 80%;
-        padding: 30px 20px;
-    }
-    #pass-input {
-        width: 120px;
-        font-size: 1.2rem;
-    }
-}
-
-/* Telefonlar (Yatay Mod) */
-@media (max-width: 900px) and (orientation: landscape) {
-    #magazine {
-        transform: scale(0.55);
-    }
+    .page-text { font-size: 1.3rem; } /* Mobilde yazılar biraz daha okunaklı olsun */
 }
